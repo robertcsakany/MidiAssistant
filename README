@@ -1,0 +1,76 @@
+Overview
+
+MidiAssistant is a simple MIDI over ethernet solution for all platforms. It's utilize OSC protocol to communicate between peers. It uses JavaOSC library (http://www.illposed.com/software/javaosc.html).
+My motivation is to developing this project that there is no open source solution for MIDI communications over ethernet for different platforms. 
+(There are some expensive software solution)
+
+You can run via command line, the parameters following:
+
+java -jar MidiAssistant-<version>.jar
+
+Parameters: 
+
+       list                       List all MIDI port
+       name                       Set the name of this host
+       remote <host> <port>       The remote host and port where the MIDI messages
+                                  is transfered
+       ping <milisec>             Ping the remotehost host periodicaly
+       midiin <midi port index>   The MIDI port listen in for messages 
+       listen <port>              Set a server where the remote clients sends MIDI messages
+       midiout <midi port index>  MIDI port where the messages from remote host
+                                  is transfered
+Examples:
+
+-----------------------------
+List all available MIDI port:
+-----------------------------
+
+>java -jar MidiAssistant-0.1-SNAPSHOT.jar list
+
+MIDI ports: 
+
+Mandolane MIDI SPI for OS X 10.5 or later Version 4.00
+0  IN     FireWire Audiophile <MIn:0>, M-Audio, Version 4.00, Midi IN port:0
+1     OUT FireWire Audiophile <MOut:0>, M-Audio, Version 4.00, Midi OUT port:0
+2  IN     FireWire Audiophile, M-Audio, Unknown version, FireWire Audiophile
+3     OUT FireWire Audiophile, M-Audio, Unknown version, FireWire Audiophile
+4  IN OUT Real Time Sequencer, Sun Microsystems, Version 1.0, Software sequencer
+5     OUT Java Sound Synthesizer, Sun Microsystems, Version 1.0, Software wavetable synthesizer and receiver
+To terminate program press ENTER
+
+-----------------------------------------------------------------------------------
+Listen UDP 11000 port for incoming MIDI messages and send them to MIDI Port 1 and 3
+-----------------------------------------------------------------------------------
+>java -jar MidiAssistant-0.1-SNAPSHOT.jar listen 11000 midiout 1 midiout 3
+
+OSC listener is running on: 11000
+Mandolane MIDI SPI for OS X 10.5 or later Version 4.00
+To terminate program press ENTER
+
+
+-----------------------------------------------------------------------------------
+Listen UDP 11000 port for incoming MIDI messages and send them to MIDI Port 1 and 3
+and sending all MIDI messages from 0 to remote host (in this example the localhost itself) 
+and testing connection
+-----------------------------------------------------------------------------------
+>java -jar MidiAssistant-0.1-SNAPSHOT.jar listen 11000 midiout 1 midiout 3 remote localhost 11000 midiin 0 ping 10000
+
+ OSC listener is running on: 11000
+Mandolane MIDI SPI for OS X 10.5 or later Version 4.00
+[START] Connection PollingThread for: noname:62384
+ PING
+To terminate program press ENTER
+ PING REQUEST from 
+ PING
+ PING REQUEST from 
+ PING
+ PING REQUEST from 
+ PING
+ PING REQUEST from 
+ PING
+ PING REQUEST from 
+ PING
+ PING REQUEST from 
+ PING
+ PING REQUEST from 
+ PING
